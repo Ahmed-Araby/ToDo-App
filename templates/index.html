@@ -1,0 +1,42 @@
+
+<html>
+    <head>
+        <title>
+            ToDo App
+        </title>
+        <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+
+    </head>
+
+    <body>
+        <h1> Hey this is Your ToDo app</h1>
+
+
+        <input id='description' type="text" name='description' value=" write your desc">
+        <input type="button" id = 'sub' value="Add">
+
+
+        <ol id="items">
+            {% for item in todoItems %}
+                    <li>
+                        <span id="item-desc">{{item.desc}}</span>
+
+
+                        <input id = 'item-id' type="hidden" value="{{item.id}}">
+
+                        <input id='item-desc-in' type="hidden" value = {{item.desc}}>
+                        <input id='update-btn' type="hidden" value="Update" onclick="update_item(event)">
+                        <input id='delete-btn' type="submit" value="-" onclick="delete_item(event)">
+                        <br> <br> <br>
+                    </li>
+
+
+            {% endfor %}
+        </ol>
+
+
+     <script src="{{url_for('static', filename = 'js/app.js')}}"></script>
+    </body>
+</html>
+
+
