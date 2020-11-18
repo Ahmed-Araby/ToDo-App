@@ -4,39 +4,68 @@
         <title>
             ToDo App
         </title>
-        <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}" >
 
     </head>
 
     <body>
         <h1> Hey this is Your ToDo app</h1>
 
+        <div id="lists-wrapper">
 
-        <input id='description' type="text" name='description' value=" write your desc">
-        <input type="button" id = 'sub' value="Add">
+            <form action="\create\todolist" method="POST" onsubmit="addNewToDoList(event)">
+                <input type="text" value="add toDo list" id="new-toDoList">
+                <input type="submit" value="Add" id="add-toDoList">
+            </form>
 
+            <ul id="toDoLists">
+                {% for list in lists %}
+                    <li data-listid="{{list.id}}">
 
-        <ol id="items">
-            {% for item in todoItems %}
-                    <li>
-                        <span id="item-desc">{{item.desc}}</span>
-
-
-                        <input id = 'item-id' type="hidden" value="{{item.id}}">
-
-                        <input id='item-desc-in' type="hidden" value = {{item.desc}}>
-                        <input id='update-btn' type="hidden" value="Update" onclick="update_item(event)">
-                        <input id='delete-btn' type="submit" value="-" onclick="delete_item(event)">
+                        <input type="checkbox" id="toDoList-check">
+                        <span> {{list.name}} </span>
+                        <input class='delete-btn' type="button" value="&cross;" onclick="delete_toDoList(event)">
                         <br> <br> <br>
                     </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+        <div id="items-wrapper">
+
+            <form action="\create\todoitem" method="POST" onsubmit="addNewToDoItem(event)">
+                <input id='new-toDoItem' type="text" name='description' value=" Add toDo Item">
+                <input type="submit" id = 'add-toDoItem' value="Add">
+            </form>
+
+            <ul id="toDoItems">
+                {% for item in todoItems %}
+                        <li>
+                            {% if item.completed %}
+                                <input type="checkbox" id = 'item-check' checked>
+                            {% else %}
+                                <input type="checkbox" id = 'item-check'>
+                            {% endif %}
+
+                            <span id="item-desc">{{item.desc}}</span>
 
 
-            {% endfor %}
-        </ol>
+                            <input id = 'item-id' type="hidden" value="{{item.id}}">
+
+                            <input id='item-desc-in' type="hidden" value = {{item.desc}}>
+                            <input id='update-btn' type="hidden" value="Update" onclick="update_item(event)">
+                            <input class='delete-btn' type="submit" value="&cross;" onclick="delete_item(event)">
+                            <br> <br> <br>
+                        </li>
 
 
-     <script src="{{url_for('static', filename = 'js/app.js')}}"></script>
+                {% endfor %}
+            </ul>
+        </div>
+
+     <script src="{{url_for('static', filename = 'js/helpers.js')}}"></script>
+     <script src="{{url_for('static', filename = 'js/app_toDoLists.js')}}"></script>
+     <script src="{{url_for('static', filename = 'js/app_toDoItems.js')}}"></script>
     </body>
 </html>
-
-
